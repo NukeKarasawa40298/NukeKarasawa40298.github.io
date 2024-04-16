@@ -2,7 +2,6 @@
 from gibbs import *
 
 from scipy.special import binom
-from math import factorial
 
 def applyFilter_(source, filterFunc, numSeries, power=1):
     spec = rfft(source)
@@ -34,7 +33,7 @@ def fejer(eta): # eta < 0 があるなら要abs
     return 1 - abs(eta)
 '''
 
-def exponential(eta, alpha=53, p=4):
+def exponential(eta, alpha=37, p=4):
     return numpy.exp(-alpha * eta**p)
 
 '''
