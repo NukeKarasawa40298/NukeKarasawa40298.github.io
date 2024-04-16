@@ -31,8 +31,20 @@ def fejer(eta): # eta < 0 があるなら要abs
     return 1 - abs(eta)
 '''
 
+def exponential(eta, alpha=53, p=4):
+    return numpy.exp(-alpha * eta**p)
+
+'''
 def daubechies4(eta): # eta < 0 があるなら要abs
     return 1 - 35 * eta**4 + 84 * eta**5 - 70 * eta**6 + 20 * eta**7
+'''
+
+def daubechies(eta, p=4):
+    seq = numpy.arange(p)
+    sgn = numpy.where(seq%2==0, 1, -1)
+    coeffs = factorial(2*p-1) / factorial(p-1)**2 * sgn * binom(p-1, seq) / (seq + p)
+    polynomial = numpy.append(numpy.zeros_like(seq), coeffs)
+    return 1 - numpy.polynomial.polynomial.polyval(eta, polynomial)
 
 if __name__ == "__main__":
     plotGibbsSuppression_(1024, fejer, 16, 1)
@@ -40,4 +52,4 @@ if __name__ == "__main__":
     plotGibbsSuppression_(1024, raisedCosine, 16, 1)
     plotGibbsSuppression_(1024, sharpendRaisedCosine, 16, 1)
     plotGibbsSuppression_(1024, exponential, 16, 1)
-    plotGibbsSuppression_(1024, daubechies4, 16, 1)
+    plotGibbsSuppression_(1024, daubechies, 16, 1)
